@@ -111,6 +111,12 @@
           overflow-x: hidden;
         }
 
+        body.modal-open {
+          overflow: hidden;
+          touch-action: none;
+          overscroll-behavior: none;
+        }
+
         .hero-immersive {
           border-radius: 1.25rem;
           padding-top: 2.25rem;
@@ -125,10 +131,12 @@
           grid-template-columns: 1fr;
         }
 
-        .booking-panel {
-          max-height: 80vh;
+        .booking-modal-form {
+          max-height: 90vh;
           overflow-y: auto;
+          overscroll-behavior: contain;
           -webkit-overflow-scrolling: touch;
+          scroll-behavior: smooth;
         }
       }
     </style>
@@ -529,7 +537,7 @@
       ></div>
 
       <div class="relative mx-auto flex min-h-dvh max-w-6xl items-end px-4 py-6 sm:items-center sm:px-6">
-        <div class="booking-panel w-full overflow-hidden rounded-3xl bg-stone-900 ring-1 ring-amber-100/20 shadow-2xl shadow-black/40">
+        <div class="booking-panel booking-modal-form w-full overflow-hidden rounded-3xl bg-stone-900 ring-1 ring-amber-100/20 shadow-2xl shadow-black/40">
           <div class="flex items-start justify-between gap-4 border-b border-amber-100/15 px-6 py-5">
             <div>
               <h3 id="bookingTitle" class="font-serif text-lg font-extrabold tracking-tight text-amber-100 warm-glow sm:text-xl">
@@ -848,6 +856,7 @@
         lastActiveElement = document.activeElement;
         modal.classList.remove("hidden");
         document.body.classList.add("overflow-hidden");
+        document.body.classList.add("modal-open");
 
         if (prefillType) {
           const type = document.getElementById("tableType");
@@ -862,6 +871,7 @@
       function closeModal() {
         modal.classList.add("hidden");
         document.body.classList.remove("overflow-hidden");
+        document.body.classList.remove("modal-open");
         if (lastActiveElement && typeof lastActiveElement.focus === "function") {
           lastActiveElement.focus();
         }
